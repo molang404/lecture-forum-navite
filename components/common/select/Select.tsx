@@ -48,7 +48,10 @@ function Select({
                     className,
                 )}
                 onPress={() => setIsOpen(!isOpen)}>
-                <TextComponent className={selectedOption ? "text-text-default" : "text-secondary-main"}>{selectedOption ? selectedOption.label : placeholder}</TextComponent>
+                <TextComponent
+                    className={selectedOption ? "text-text-default" : "text-secondary-main"}>
+                    {selectedOption ? selectedOption.label : placeholder}
+                </TextComponent>
                 <Ionicons name={"chevron-down"} size={16} color={"#9CA3AF"} />
             </Pressable>
 
