@@ -1,8 +1,8 @@
 import { Pressable, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import { useThemeStore } from "@/stores/theme/useThemeStore";
-import Button from "@/components/common/button/Button";
+import { useThemeStore } from "../../../stores/theme/useThemeStore";
+import Button from "../../../components/common/button/Button";
 
 function MainHeader() {
     const { theme, onChangeTheme } = useThemeStore();

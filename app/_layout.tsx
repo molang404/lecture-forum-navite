@@ -1,6 +1,6 @@
 import "../styles/global.css";
 import { Slot } from "expo-router";
-import { useThemeStore } from "@/stores/theme/useThemeStore";
+import { useThemeStore } from "../stores/theme/useThemeStore";
 import { useColorScheme } from "nativewind";
 import { useEffect } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
