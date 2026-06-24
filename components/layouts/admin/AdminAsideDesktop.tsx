@@ -52,7 +52,7 @@ function AdminAsideDesktop() {
                                     <TextComponent
                                         className={twMerge(
                                             "font-bold",
-                                            isActive ? "text-primary-main" : "text-text-default",
+                                            isActive ? "text-primary-contrast" : "text-text-default",
                                         )}>
                                         {item.label}
                                     </TextComponent>

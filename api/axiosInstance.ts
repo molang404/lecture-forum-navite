@@ -1,4 +1,5 @@
 import { create } from "axios";
+import { useAuthStore } from "../stores/auth/useAuthStore";
 
 // React는 VITE를 통해 구동을 시켰기 때문에 환경변수의 접두사가 VITE_ 로 시작함
 // React-Native + Expo 환경에서는 VITE_ 대신 EXPO_PUBLIC_ 으로 접두사가 시작함
@@ -12,3 +13,13 @@ const api = create({
 });
 
 export default api;
+
+api.interceptors.request.use(config => {
+    const { token } = useAuthStore.getState();
+
+    if (token) {
+        config.headers.authorization = `Bearer ${token}`;
+    }
+
+    return config;
+});
