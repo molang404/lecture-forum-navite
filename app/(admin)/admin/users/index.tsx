@@ -139,81 +139,85 @@ function AdminUserListPage() {
                             </TextComponent>
                         </View>
                     )}
-                    {list.map((item, index) => <View
-                        key={item.id}
-                        className={twMerge(
-                            ["flex-row", "items-center", "px-4", "py-3", "transition-all"],
-                            ["border-b", "border-divider"],
-                            index === list.length - 1 && ["rounded-b-xl", "border-b-0"],
-                        )}>
-                        <TextComponent
-                            className={twMerge(["hidden", "md:flex", "w-12"], ["text-center"])}>
-                            {item.id}
-                        </TextComponent>
-                        <View className={twMerge(["flex-1", "px-2"])}>
-                            <View className={twMerge("flex-row", "items-center", "gep-10")}>
-                                <TextComponent className={"font-bold"} numberOfLines={1}>
-                                    {item.username}
-                                </TextComponent>
-                                {item.deletedAt && <Badge color={"error"} size={"small"} variant={"outlined"}>
-                                        탈퇴
-                                    </Badge>}
-                            </View>
+                    {list.map((item, index) => (
+                        <View
+                            key={item.id}
+                            className={twMerge(
+                                ["flex-row", "items-center", "px-4", "py-3", "transition-all"],
+                                ["border-b", "border-divider"],
+                                index === list.length - 1 && ["rounded-b-xl", "border-b-0"],
+                            )}>
                             <TextComponent
-                                className={twMerge("text-xs", "text-text-secondary", "mt-0.5")}
-                                numberOfLines={1}>
-                                {item.name} ({item.nickname})
+                                className={twMerge(["hidden", "md:flex", "w-12"], ["text-center"])}>
+                                {item.id}
+                            </TextComponent>
+                            <View className={twMerge(["flex-1", "px-2"])}>
+                                <View className={twMerge("flex-row", "items-center", "gep-10")}>
+                                    <TextComponent className={"font-bold"} numberOfLines={1}>
+                                        {item.username}
+                                    </TextComponent>
+                                    {item.deletedAt && (
+                                        <Badge color={"error"} size={"small"} variant={"outlined"}>
+                                            탈퇴
+                                        </Badge>
+                                    )}
+                                </View>
+                                <TextComponent
+                                    className={twMerge("text-xs", "text-text-secondary", "mt-0.5")}
+                                    numberOfLines={1}>
+                                    {item.name} ({item.nickname})
+                                </TextComponent>
+                            </View>
+                            <TextComponent className={twMerge(["w-16"], ["text-center"])}>
+                                <Badge
+                                    color={item.role === "ADMIN" ? "info" : "secondary"}
+                                    size={"small"}>
+                                    {item.role}
+                                </Badge>
+                            </TextComponent>
+                            <TextComponent
+                                className={twMerge(
+                                    ["hidden", "md:flex", "w-24"],
+                                    ["font-bold", "text-text-secondary", "px-2", "text-center"],
+                                )}>
+                                {item.createdAt.substring(0, 10)}
+                            </TextComponent>
+                            <TextComponent
+                                className={twMerge(
+                                    ["w-20"],
+                                    ["font-bold", "text-text-secondary", "px-2", "text-center"],
+                                )}>
+                                <Pressable
+                                    className={"p-1.5"}
+                                    disabled={!!item.deletedAt}
+                                    onPress={() => router.push(`/admin/users/${item.id}`)}>
+                                    <Feather
+                                        name={"edit-2"}
+                                        size={16}
+                                        className={
+                                            item.deletedAt
+                                                ? "text-text-secondary"
+                                                : "text-text-secondary hover:text-primary-main"
+                                        }
+                                    />
+                                </Pressable>
+                                <Pressable
+                                    className={"p-1.5"}
+                                    disabled={!!item.deletedAt}
+                                    onPress={() => handleDeleteUser(item.id)}>
+                                    <Feather
+                                        name={"trash-2"}
+                                        size={16}
+                                        className={
+                                            item.deletedAt
+                                                ? "text-text-secondary"
+                                                : "text-error-main"
+                                        }
+                                    />
+                                </Pressable>
                             </TextComponent>
                         </View>
-                        <TextComponent className={twMerge(["w-16"], ["text-center"])}>
-                            <Badge
-                                color={item.role === "ADMIN" ? "info" : "secondary"}
-                                size={"small"}>
-                                {item.role}
-                            </Badge>
-                        </TextComponent>
-                        <TextComponent
-                            className={twMerge(
-                                ["hidden", "md:flex", "w-24"],
-                                ["font-bold", "text-text-secondary", "px-2", "text-center"],
-                            )}>
-                            {item.createdAt.substring(0, 10)}
-                        </TextComponent>
-                        <TextComponent
-                            className={twMerge(
-                                ["w-20"],
-                                ["font-bold", "text-text-secondary", "px-2", "text-center"],
-                            )}>
-                            <Pressable
-                                className={"p-1.5"}
-                                disabled={!!item.deletedAt}
-                                onPress={() => router.push(`/admin/users/${item.id}`)}>
-                                <Feather
-                                    name={"edit-2"}
-                                    size={16}
-                                    className={
-                                        item.deletedAt
-                                            ? "text-text-secondary"
-                                            : "text-text-secondary hover:text-primary-main"
-                                    }
-                                />
-                            </Pressable>
-                            <Pressable
-                                className={"p-1.5"}
-                                disabled={!!item.deletedAt}
-                                onPress={() => handleDeleteUser(item.id)}>
-                                <Feather
-                                    name={"trash-2"}
-                                    size={16}
-                                    className={
-                                        item.deletedAt
-                                            ? "text-text-secondary"
-                                            : "text-error-main"
-                                    }
-                                />
-                            </Pressable>
-                        </TextComponent>
-                    </View>)}
+                    ))}
                 </ScrollView>
             </Card>
             <Pagination
