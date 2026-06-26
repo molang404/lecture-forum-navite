@@ -36,10 +36,10 @@ function Pagination({
 
     const currentBlock = Math.ceil(currentPage / displayPages);
     const startPage = (currentBlock - 1) * displayPages + 1;
-    const endPage = Math.min(startPage + displayPages, totalPage);
+    const endPage = Math.min(startPage + displayPages - 1, totalPage);
 
     const pageNumbers = [];
-    for (let i = startPage; i < endPage; i++) {
+    for (let i = startPage; i <= endPage; i++) {
         pageNumbers.push(i);
     }
 
