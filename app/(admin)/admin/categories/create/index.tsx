@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
     AdminCategoryInputType,
     AdminCategorySchema,
-} from "../../../../../schemas/admin/AdminCategorySchema";
+} from "../../../../../schemas/admin/adminCategorySchema";
 import { useRouter } from "expo-router";
 import { View } from "react-native";
 import { twMerge } from "tailwind-merge";

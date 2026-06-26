@@ -46,7 +46,7 @@ function AdminAsideDesktop() {
                                         name={item.icon as any}
                                         size={18}
                                         className={
-                                            isActive ? "text-text-default" : "text-text-secondary"
+                                            isActive ? "text-primary-contrast" : "text-text-secondary"
                                         }
                                     />
                                     <TextComponent

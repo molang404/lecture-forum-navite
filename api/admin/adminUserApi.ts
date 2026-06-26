@@ -1,6 +1,7 @@
 import axiosInstance from "../axiosInstance";
 import { User } from "../../types/user";
 import { PaginationResponseType } from "../../types/common";
+import { AdminCreateUserInputType } from "../../schemas/user/adminCreateUserSchema";
 
 const getUserList = async (
     page: number = 1,
@@ -18,12 +19,30 @@ const getUserList = async (
     return response.data.data;
 };
 
+const getUserById = async (id: number): Promise<User> => {
+    const response = await axiosInstance.get(`/admin/user/${id}`);
+    return response.data.data;
+};
+
+const createUser = async (input: AdminCreateUserInputType): Promise<User> => {
+    const response = await axiosInstance.post("/admin/user/create", input);
+    return response.data.data;
+};
+
+const updateUser = async (input: AdminCreateUserInputType): Promise<User> => {
+    const response = await axiosInstance.patch("/admin/user/update", input);
+    return response.data.data;
+};
+
 const deleteUser = async (id: number): Promise<User> => {
     const response = await axiosInstance.patch(`/admin/user/${id}/delete`);
     return response.data.data;
-}
+};
 
 export default {
     getUserList,
+    getUserById,
+    createUser,
+    updateUser,
     deleteUser,
 };
