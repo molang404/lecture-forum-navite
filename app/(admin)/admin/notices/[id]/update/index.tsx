@@ -13,13 +13,15 @@ import InputGroup from "../../../../../../components/common/input/InputGroup";
 import TextareaGroup from "../../../../../../components/common/textarea/TextareaGroup";
 import ErrorMessage from "../../../../../../components/common/form/ErrorMessage";
 import Button from "../../../../../../components/common/button/Button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import noticeApi from "../../../../../../api/user/noticeApi";
+import LoadingIndicator from "../../../../../../components/common/loading/LoadingIndicator";
 
 function AdminNoticeUpdatePage() {
     const router = useRouter();
     const { id } = useLocalSearchParams<{ id: string }>();
     const noticeId = Number(id);
+    const [isLoading, setIsLoading] = useState(true);
 
     const {
         control,
@@ -47,12 +49,15 @@ function AdminNoticeUpdatePage() {
             } catch (error) {
                 console.log(error);
                 if (Platform.OS === "web") {
-                    alert("공지사항을 불러오는데 실패했습니다.");
-                    router.push("/admin/notices");
+                    alert("공지사항을 불러오는 중에 오류가 발생했습니다.");
+                    router.back();
                 } else {
-                    Alert.alert("오류", "공지사항을 불러오는데 실패했습니다.");
-                    router.push("/admin/notices");
+                    Alert.alert("오류", "공지사항을 불러오는 중에 오류가 발생했습니다.", [
+                        { text: "확인", onPress: () => router.back() },
+                    ]);
                 }
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -65,10 +70,10 @@ function AdminNoticeUpdatePage() {
 
             if (Platform.OS === "web") {
                 alert("공지사항이 성공적으로 수정되었습니다.");
-                router.push(`/admin/notices/${noticeId}`);
+                router.back();
             } else {
                 Alert.alert("완료", "공지사항이 성공적으로 수정되었습니다.", [
-                    { text: "확인", onPress: () => router.push(`/admin/notices/${noticeId}`) },
+                    { text: "확인", onPress: () => router.back() },
                 ]);
             }
         } catch (error) {
@@ -76,6 +81,10 @@ function AdminNoticeUpdatePage() {
             setError("root", { message: "공지사항 수정에 실패했습니다." });
         }
     };
+
+    if (isLoading) {
+        return <LoadingIndicator fullScreen />;
+    }
 
     return (
         <View className={twMerge("flex-1", "w-full")}>
@@ -141,7 +150,7 @@ function AdminNoticeUpdatePage() {
                         color={"primary"}
                         onPress={handleSubmit(onSubmit)}
                         disabled={isSubmitting}>
-                        {isSubmitting ? "수정 중..." : "수정"}
+                        {isSubmitting ? "수정 중..." : "수정하기"}
                     </Button>
                 </View>
             </ScrollView>
