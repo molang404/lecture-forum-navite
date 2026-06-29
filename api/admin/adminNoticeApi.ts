@@ -7,6 +7,18 @@ const createNotice = async (input: AdminNoticeInputType): Promise<Notice> => {
     return response.data.data;
 };
 
+const updateNotice = async (id: number, input: AdminNoticeInputType): Promise<Notice> => {
+    const response = await axiosInstance.patch(`/admin/notice/${id}`, input);
+    return response.data.data;
+};
+
+const deleteNotice = async (id: number): Promise<void> => {
+    // Promise는 내가 기다려야 결과를 알 수 있다 => async - await을 썼으면 무조건 써야 함
+    await axiosInstance.delete(`/admin/notice/${id}`);
+};
+
 export default {
     createNotice,
-}
+    updateNotice,
+    deleteNotice,
+};
