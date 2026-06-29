@@ -12,6 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { MYPAGE_NAV_LIST } from "../../../constants/menu";
 import { Role } from "../../../types/user";
 import Button from "../../common/button/Button";
+import Accordion from "../../common/accordion/Accordion";
 
 function MainHeaderMobile() {
     const router = useRouter();
@@ -149,24 +150,37 @@ function MainHeaderMobile() {
                                 ["mb-8", "bg-background-default", "rounded-xl"],
                                 ["border", "border-divider"],
                             )}>
-                            {list.map(item => (
-                                <Pressable
-                                    key={item.id}
-                                    className={twMerge(
-                                        ["px-8", "py-3"],
-                                        ["active:bg-background-default", "transition-all"],
-                                    )}
-                                    onPress={() => handleNavigate(`category/${item.id}`)}>
-                                    <TextComponent className={twMerge("font-medium")}>
-                                        {item.name}
+                            <Accordion
+                                title={"토론장"}
+                                className={twMerge("border-b", "border-divider")}>
+                                {list.length === 0 && (
+                                    <TextComponent
+                                        className={twMerge(
+                                            ["p-4", "text-center"],
+                                            ["text-text-secondary", "text-sm"],
+                                        )}>
+                                        카테고리가 없습니다
                                     </TextComponent>
-                                </Pressable>
-                            ))}
+                                )}
+                                {list.map(item => (
+                                    <Pressable
+                                        key={item.id}
+                                        className={twMerge(
+                                            ["px-8", "py-3"],
+                                            ["active:bg-background-default", "transition-all"],
+                                        )}
+                                        onPress={() => handleNavigate(`category/${item.id}`)}>
+                                        <TextComponent className={twMerge("font-medium")}>
+                                            {item.name}
+                                        </TextComponent>
+                                    </Pressable>
+                                ))}
+                            </Accordion>
 
                             <Pressable
                                 onPress={() => handleNavigate("/notices")}
                                 className={twMerge(
-                                    ["px-8", "py-3"],
+                                    ["p-4"],
                                     ["active:bg-background-default", "transition-all"],
                                 )}>
                                 <TextComponent className={"font-medium"}>공지사항</TextComponent>
