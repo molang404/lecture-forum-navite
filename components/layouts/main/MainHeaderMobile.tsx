@@ -3,9 +3,8 @@ import { twMerge } from "tailwind-merge";
 import { useRouter } from "expo-router";
 import { useThemeStore } from "../../../stores/theme/useThemeStore";
 import { useAuthStore } from "../../../stores/auth/useAuthStore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Category } from "../../../types/category";
-import categoryApi from "../../../api/user/categoryApi";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import TextComponent from "../../common/text/TextComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,27 +13,17 @@ import { Role } from "../../../types/user";
 import Button from "../../common/button/Button";
 import Accordion from "../../common/accordion/Accordion";
 
-function MainHeaderMobile() {
+interface Props {
+    list: Category[];
+}
+
+function MainHeaderMobile({ list }: Props) {
     const router = useRouter();
     const { theme, onChangeTheme } = useThemeStore();
     const { isLoggedIn, user, logout } = useAuthStore();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [list, setList] = useState<Category[]>([]);
     // 카테고리 정보를 불러오기 전이라도 로그아웃 등의 기능은 사용할 수 있어야 돼서 isLoading X
-
-    useEffect(() => {
-        const loadCategories = async () => {
-            try {
-                const result = await categoryApi.getCategoryList();
-                setList(result);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        loadCategories().then(() => {});
-    }, []);
 
     const handleNavigate = (path: string) => {
         setIsMenuOpen(false);
@@ -44,7 +33,7 @@ function MainHeaderMobile() {
     const handleLogout = () => {
         setIsMenuOpen(false);
         logout();
-    }
+    };
 
     return (
         <View
