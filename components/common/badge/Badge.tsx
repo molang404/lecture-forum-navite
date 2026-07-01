@@ -7,6 +7,7 @@ interface BadgeProps extends ViewProps {
     color?: StyleColorType;
     variant?: StyleVariantType;
     size?: StyleSizeType;
+    textClasses?: string;
 }
 
 function Badge({
@@ -15,6 +16,7 @@ function Badge({
     size = "medium",
     children,
     className,
+    textClasses,
     ...props
 }: BadgeProps) {
     const getContainerClasses = () => {
@@ -56,7 +58,7 @@ function Badge({
             {...props}>
             {/* 사용할 때 children에 그냥 string이 들어올 경우, 그대로 출력해주면 React-Native에서는 에러 */}
             {typeof children === "string" ? (
-                <TextComponent className={twMerge("font-bold", getTextColorClasses())}>
+                <TextComponent className={twMerge("font-bold", getTextColorClasses(), textClasses)}>
                     {children}
                 </TextComponent>
             ) : (
