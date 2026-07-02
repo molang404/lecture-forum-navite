@@ -10,5 +10,6 @@ export const registerUserSchema = userSchema
         path: ["passwordConfirm"],
         message: "비밀번호가 일치하지 않습니다.",
     });
+// .refine(boolean이 리턴되는 함수, {옵션})
 
 export type RegisterUserInputType = z.infer<typeof registerUserSchema>;
